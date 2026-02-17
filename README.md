@@ -1,129 +1,75 @@
-RhythmBox is a modular, console-based C++ application that simulates a music player with a fully interactive menu-driven interface.
+# 🎵 RhythmBox
 
-It is designed as a practical demonstration of:
+A modular, console-based **C++11 music player** featuring an interactive menu-driven interface and professional design patterns implementation.
 
-Object-Oriented Programming (OOP)
+## 📖 Project Description
 
-SOLID principles
+RhythmBox is a practical demonstration of Object-Oriented Programming (OOP), SOLID principles, and real-world software design patterns in C++. It provides a clean, extensible architecture for managing music libraries, creating playlists, controlling playback, and dynamically connecting audio devices through an intuitive command-line interface.
 
-Real-world software design patterns
+---
 
-Clean and extensible architecture
+## 🎯 Key Features
 
-The system allows users to manage a song library, create playlists, switch playback strategies, and dynamically connect audio output devices — all from an intuitive CLI.
+### 🎶 Music Library & Playlists
 
-🚀 Key Features
-🎶 Music Library & Playlists
+- Create and manage songs in a centralized library
+- Create multiple custom playlists
+- Add and remove songs from playlists
+- Delete playlists dynamically
 
-Create and manage songs in a centralized library
+### ▶️ Playback Control
 
-Create multiple custom playlists
+- Play full playlists or individual tracks
+- Switch between **Sequential Mode** (in-order playback) and **Random Mode** (shuffled playback)
+- Navigate tracks using **Next** and **Previous** controls
+- Playback behavior changed at runtime without modifying existing code
 
-Add and remove songs from playlists
+### 🔌 Device Simulation
 
-Delete playlists dynamically
+- Simulate dynamic connection of audio output devices:
+  - 🎧 Headphones
+  - 🔊 Bluetooth Speaker
+  - 🔌 Wired Speaker
+- Devices can be switched during execution, demonstrating runtime abstraction and loose coupling
 
-▶ Playback Control
+---
 
-Play full playlists or individual tracks
+## 🏛️ Design Patterns Implemented
 
-Switch between:
+### 🔹 Facade Pattern
 
-Sequential Mode (in-order playback)
+**MusicPlayerFacade** provides a simplified high-level interface to complex subsystems, hiding internal complexity and offering a unified access point for all operations.
 
-Random Mode (shuffled playback)
+### 🔹 Singleton Pattern
 
-Navigate tracks using:
+Managers, Facade, and Application class ensure single, globally accessible instances, preventing multiple instantiations and maintaining consistent state throughout the application.
 
-Next
+### 🔹 Strategy Pattern
 
-Previous
+**PlayStrategy Interface** with concrete implementations:
+- **SequentialPlayStrategy** - Plays songs in order
+- **RandomPlayStrategy** - Plays songs in random order
 
-Playback behavior can be changed at runtime without modifying existing code.
+Enables runtime switching of playback behavior without modifying client code.
 
-🔌 Device Simulation
+### 🔹 Adapter Pattern
 
-Simulates dynamic connection of audio output devices:
+Device adapters wrap incompatible external device APIs into a unified interface:
+- **BluetoothSpeakerAdapter**
+- **WiredSpeakerAdapter**
+- **HeadphonesAdapter**
 
-🎧 Headphones
+Allows seamless integration of different device APIs through a common interface.
 
-🔊 Bluetooth Speaker
+### 🔹 Factory Method Pattern
 
-🔌 Wired Speaker
+**DeviceFactory** encapsulates device creation logic, abstracting the instantiation process and promoting loose coupling between device creation and usage.
 
-Devices can be switched during execution, demonstrating runtime abstraction and loose coupling.
+---
 
-🏗 Architecture Overview
+## 📂 Project Structure
 
-RhythmBox follows a clean layered structure:
-
-CLI (main.cpp)
-        ↓
-MusicPlayerFacade
-        ↓
-Managers (Device, Playlist, Strategy)
-        ↓
-AudioEngine
-        ↓
-Device Adapters
-        ↓
-External Device APIs
-
-Architectural Goals
-
-High cohesion
-
-Low coupling
-
-Runtime flexibility
-
-Easy extensibility
-
-Clear separation of concerns
-
-🧠 Design Patterns Implemented
-
-This project demonstrates multiple categories of design patterns:
-
-🔹 Facade Pattern
-
-MusicPlayerFacade
-
-Provides a simplified high-level interface to complex subsystems.
-
-🔹 Singleton Pattern
-
-Used for Managers and Application class
-
-Ensures a single globally accessible instance.
-
-🔹 Strategy Pattern
-
-PlayStrategy interface
-
-SequentialPlayStrategy
-
-RandomPlayStrategy
-
-Enables runtime switching of playback behavior.
-
-🔹 Adapter Pattern
-
-BluetoothSpeakerAdapter
-
-WiredSpeakerAdapter
-
-HeadphonesAdapter
-
-Wraps incompatible external device APIs into a unified interface.
-
-🔹 Factory Method Pattern
-
-DeviceFactory
-
-Encapsulates device creation logic.
-
-📂 Project Structure
+```
 MusicPlayerApplication/
 │
 ├── main.cpp                      # Entry point and interactive CLI
@@ -131,123 +77,143 @@ MusicPlayerApplication/
 ├── MusicPlayerApplication.hpp    # Application singleton
 │
 ├── core/
-│   └── AudioEngine.hpp
+│   └── AudioEngine.hpp           # Core playback logic
 │
 ├── enums/
-│   ├── DeviceType.hpp
-│   └── PlayStrategyType.hpp
+│   ├── DeviceType.hpp            # Audio device type enumeration
+│   └── PlayStrategyType.hpp      # Playback strategy enumeration
 │
 ├── models/
-│   ├── Song.hpp
-│   └── Playlist.hpp
+│   ├── Song.hpp                  # Song data model
+│   └── Playlist.hpp              # Playlist data model
 │
 ├── managers/
-│   ├── PlaylistManager.hpp
-│   ├── DeviceManager.hpp
-│   └── StrategyManager.hpp
+│   ├── PlaylistManager.hpp       # Manages playlists
+│   ├── DeviceManager.hpp         # Manages audio devices
+│   └── StrategyManager.hpp       # Manages playback strategies
 │
 ├── strategies/
-│   ├── PlayStrategy.hpp
-│   ├── SequentialPlayStrategy.hpp
-│   └── RandomPlayStrategy.hpp
+│   ├── PlayStrategy.hpp          # Abstract playback strategy
+│   ├── SequentialPlayStrategy.hpp # Sequential playback implementation
+│   └── RandomPlayStrategy.hpp    # Random playback implementation
 │
 ├── device/
-│   ├── IAudioOutputDevice.hpp
+│   ├── IAudioOutputDevice.hpp    # Audio device interface
 │   ├── BluetoothSpeakerAdapter.hpp
 │   ├── WiredSpeakerAdapter.hpp
 │   └── HeadphonesAdapter.hpp
 │
 ├── external/
-│   ├── BluetoothSpeakerAPI.hpp
+│   ├── BluetoothSpeakerAPI.hpp   # Mock external APIs
 │   ├── HeadphonesAPI.hpp
 │   └── WiredSpeakerAPI.hpp
 │
 └── factories/
-    └── DeviceFactory.hpp
+    └── DeviceFactory.hpp         # Device creation factory
+```
 
-🛠 Getting Started
-Prerequisites
+---
 
-C++11 compatible compiler (e.g., g++)
+## 🛠️ Build & Run Instructions
 
-Build
+### Prerequisites
+
+- C++11 compatible compiler (e.g., g++)
+
+### Build
+
+```bash
+cd "RhythmBox/C++ Code/MusicPlayerSystem/MusicPlayerApplication"
 g++ -std=c++11 -o RhythmBox main.cpp
+```
 
-Run
+### Run
+
+```bash
 ./RhythmBox
+```
 
-🧪 Sample Interactive Session
+---
+
+## 🧪 Sample Interactive Session
+
+```
 Initial song library populated with 5 songs.
 
 ===== RhythmBox Music Player =====
-1. Create Song
-2. Create Playlist
-3. Add Song to Playlist
-4. Connect Device
-5. Set Playback Strategy
-6. Play Playlist
+1.  Create Song in Library
+2.  Create Playlist
+3.  Add Song to Playlist
+4.  Remove Song from Playlist
+5.  Connect Device
+6.  Set Playback Strategy
+7.  Play Playlist
+8.  Next Track
+9.  Previous Track
+10. View Playlists
+11. Exit
 ==================================
 
 Enter your choice: 2
 Enter new playlist name: Road Trip Mix
-Playlist created successfully.
 
+Playlist "Road Trip Mix" created successfully.
+
+===== RhythmBox Music Player =====
+...
 Enter your choice: 3
 Enter playlist name: Road Trip Mix
-Enter song title: Zinda
-Song added successfully.
+Enter song title to add: Zinda
 
-Enter your choice: 4
-Select device:
+Song added to playlist successfully.
+
+===== RhythmBox Music Player =====
+...
+Enter your choice: 5
+Select a device:
 1. Headphones
-2. Bluetooth
-3. Wired
-Bluetooth device connected.
+2. Bluetooth Speaker
+3. Wired Speaker
 
-Enter your choice: 6
--- Playing Playlist --
-Playing: Zinda by Siddharth Mahadevan
-[BluetoothSpeaker] Playing: Zinda
+Enter your choice: 2
+Bluetooth Speaker connected.
 
-💡 What This Project Demonstrates
+===== RhythmBox Music Player =====
+...
+Enter your choice: 7
+Enter playlist name to play: Road Trip Mix
 
-Strong OOP fundamentals
+-- Playing all tracks in 'Road Trip Mix' --
+Playing song: Zinda
+[BluetoothSpeaker] Playing: Zinda by Siddharth Mahadevan
+Completed playlist: Road Trip Mix
+```
 
-Real implementation of design patterns
+---
 
-Modular engineering approach
+## 💻 Technologies Used
 
-Runtime polymorphism
+- **Language**: C++11
+- **Paradigm**: Object-Oriented Programming (OOP)
+- **Principles**: SOLID Principles
+- **Design Patterns**: Strategy, Singleton, Facade, Adapter, Factory Method
+- **Interface**: Command-Line Interface (CLI)
 
-Clean and maintainable architecture
+---
 
-Practical system design thinking in C++
+## 🔮 Future Improvements
 
-This project is suitable for:
+- Add persistent storage using file system or database
+- Implement real-time playback with actual audio libraries
+- Develop a GUI version using frameworks like Qt or ImGui
+- Add comprehensive unit testing suite
+- Introduce CMake build system
+- Implement CI/CD pipeline (GitHub Actions)
+- Add support for multiple audio formats
+- Implement volume control and equalizer features
 
-Software engineering interviews
+---
 
-C++ developer roles
+## 📜 License
 
-Backend engineering roles
-
-System design discussions
-
-🔮 Future Improvements
-
-Add persistent storage (file system / database)
-
-Integrate real audio playback library
-
-Add unit testing support
-
-Introduce CMake build system
-
-Convert CLI to GUI (Qt / ImGui)
-
-Add CI/CD pipeline
-
-📜 License
-
-This project is licensed under the MIT License.
-See the LICENSE file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
